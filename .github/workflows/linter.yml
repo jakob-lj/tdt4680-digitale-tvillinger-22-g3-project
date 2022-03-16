@@ -4,4 +4,6 @@ jobs:
   Lint:
     runs-on: ubuntu-latest
     steps:
+      - run: echo $(pwd)
+      - run: ls
       - run: ./testLinter.sh
