@@ -6,3 +6,11 @@ Year: 2022V
 Group: 3
 
 contributors: Kenneth, Vegard, Styrk, Astrid and Jakob
+
+## Contributing
+```bash
+source venv/bin/activate
+```
+```bash
+pip install -r requirements.txt
+```
