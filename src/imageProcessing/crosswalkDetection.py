@@ -65,3 +65,5 @@ def detect(imagePath):
                 cv2.line(img, start, end, (0, 0, 225), 3)
 
     cv2.imshow("Result", img)
+
+    cv2.imwrite("results/crosswalk_detection.png", img)
