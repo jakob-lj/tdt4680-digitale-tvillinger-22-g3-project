@@ -1,6 +1,6 @@
 
 
-_SUPPORTED_CODES = [1, 32]
+_SUPPORTED_CODES = [1, 4, 31, 32]
 
 
 def _base(msg, code):

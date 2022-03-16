@@ -1,16 +1,10 @@
 
 import sys
-# import cv2
-from stringHelpers import bold, green
+import cv2
+from stringHelpers import bold, green, underline
+from imageProcessing.crosswalkDetection import detect
 
-
-def log(message):
-    """
-    Helper function to log messages - used in order to support
-    hard core logging at a later point of view
-    """
-
-    print(message)
+from log import log
 
 
 class Images:
@@ -75,6 +69,21 @@ if __name__ == '__main__':
 
     defineImages(mocking)
 
+    log("\n\n")
+    log(underline(green(bold("Digitale tvillinger 2022V - g3\n"))))
+    log("\n" + "---"*3)
+    log("Initializing\n" + "---"*3)
+    log("\n")
+
     log("%s\n%s" % (bold("Running with flags"), stringifyFlags(mocking)))
 
     log("%s\n%s" % (bold("Running with image set:"), stringigyImages(images)))
+
+    log("\n\n" + "---" * 3)
+    log("Initialization finished\n" + "---" * 3)
+    log("\n\n")
+
+    detect(images[Images.CROSSWALK_OK_SHAPE])
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
