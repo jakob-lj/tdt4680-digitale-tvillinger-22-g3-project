@@ -5,5 +5,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo $(pwd)
-      - run: ls
+      - run: echo $(ls)
       - run: ./testLinter.sh
