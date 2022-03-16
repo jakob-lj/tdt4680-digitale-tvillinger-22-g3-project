@@ -21,3 +21,10 @@ pip install -r requirements.txt
 
 This image demonstraits crosswalk detection from a car perspective after 1 day of coding:
 ![Crosswalk detection](https://github.com/jakob-lj/tdt4680-digitale-tvillinger-22-g3-project/blob/main/src/results/crosswalk_detection.png)
+
+## Plan to finish
+
+- [x] Basic algorithm to detect crosswalk elements
+- [ ] Custom algorithm to detect if there's a crosswalk in image
+- [ ] Custom algorithm to detect crosswalk ware
+- [ ] Sync data from crosswalk ware to digital road representation database
