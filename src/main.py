@@ -70,7 +70,7 @@ if __name__ == '__main__':
     defineImages(mocking)
 
     log("\n\n")
-    log(underline(green(bold("Digitale tvillinger 2022V - g3\n"))))
+    log(underline(green(bold("Digitale tvillinger V2022 - g3\n"))))
     log("\n" + "---"*3)
     log("Initializing\n" + "---"*3)
     log("\n")
