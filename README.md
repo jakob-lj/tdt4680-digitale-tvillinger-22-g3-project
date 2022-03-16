@@ -25,6 +25,6 @@ This image demonstraits crosswalk detection from a car perspective after 1 day o
 ## Plan to finish
 
 - [x] Basic algorithm to detect crosswalk elements
-- [] Custom algorithm to detect if there's a crosswalk in image
-- [] Custom algorithm to detect crosswalk ware
-- [] Sync data from crosswalk ware to digital road representation database
+- [ ] Custom algorithm to detect if there's a crosswalk in image
+- [ ] Custom algorithm to detect crosswalk ware
+- [ ] Sync data from crosswalk ware to digital road representation database
