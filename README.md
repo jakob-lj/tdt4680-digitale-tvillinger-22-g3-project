@@ -7,7 +7,7 @@ Group: 3
 
 contributors: Kenneth, Vegard, Styrk, Astrid and Jakob
 
-## Contributing
+## Development
 ```bash
 source venv/bin/activate
 ```
