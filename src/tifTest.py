@@ -48,12 +48,26 @@ if debugRaster:
             print(val)
             print(geom)
 
-            print(dataset.xy(2500, 2500))
+            pointx, pointy = dataset.xy(2500, 2500)
+            print(dataset)
 
             # Transform shapes from the dataset's own coordinate
             # reference system to CRS84 (EPSG:4326).
+
+            xarr = []
+            yarr = []
+            for v in geom['coordinates'][0]:
+                xarr.append(v[0])
+                yarr.append(v[1])
+
+            ds = rasterio.warp.transform(
+                'EPSG:5972', 'EPSG:4326', [pointx], [pointy])
+            print(ds)
             geom = rasterio.warp.transform_geom(
                 'EPSG:5972', 'EPSG:4326', geom, precision=6)
 
             # Print GeoJSON shapes to stdout.
             print(geom)
+
+            print("Åhere")
+            print(dir(geom))
