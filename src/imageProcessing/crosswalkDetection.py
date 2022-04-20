@@ -67,9 +67,6 @@ def groupRectanglesToCrossWalks(rectangles, distanceThreshold=0.2):
             largestThreshold = max(
                 currentRectangle.getLargestSize(), naborRectangle.getLargestSize())
 
-            print("Treshold found to be: ", largestThreshold)
-            print("Found rectangle at distance", distance)
-
             if (distance < largestThreshold):
                 groupRectangles(currentRectangle, naborRectangle)
 
