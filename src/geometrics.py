@@ -12,7 +12,3 @@ def calculateDistance(pointA, pointB):
     y = (yA - yB)
 
     return math.sqrt(x**2 + y**2)
-
-
-def crossWalkIFy(crossWalkRectangles):
-    return crossWalkRectangles

@@ -2,8 +2,8 @@
 from turtle import color
 import cv2
 import numpy as np
-from geometrics import calculateDistance, crossWalkIFy
-from imageProcessing.objects import Rectangle
+from geometrics import calculateDistance
+from imageProcessing.objects import Rectangle, crossWalkIFy
 
 from log import log
 
@@ -155,19 +155,16 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
     # Grouping rectangles does not work as of now
     #print(cv2.groupRectangles(rectList=rectList, groupThreshold=3))
 
-    sumX = 0
-    sumY = 0
-    for element in objList:
-        center = element.getCenter()
-        sumX += center[0]
-        sumY += center[1]
-
     crossWalkGroups = groupRectanglesToCrossWalks(objList)
-    print(crossWalkGroups)
 
-    center = (int(sumX / len(objList)), int(sumY / len(objList)))
+    for crosswalk in crossWalkGroups:
+        print(crosswalk)
+        print(crosswalk.center)
+        cv2.circle(coloredThresCopy, crosswalk.center, 15, (255, 0, 0),  -1)
+        print(crosswalk.corners)
 
-    cv2.circle(coloredThresCopy, center, 15, (255, 0, 0),  -1)
+        cv2.rectangle(coloredThresCopy, crosswalk.upperLeftCorner,
+                      crosswalk.lowerRightCorner, (0, 0, 255), 2)
 
     if(outputImages):
         cv2.imshow("Result", coloredThresCopy)
