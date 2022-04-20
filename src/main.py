@@ -35,10 +35,10 @@ def defineImages(mocking):
     if (mocking):
         images = {
             Images.NO_CROSSWALK: "assets/mock/no_crosswalk.png",
-            Images.CROSSWALK_OK_SHAPE: "assets/mock/small_crosswalk_ok_shape.png"
+            Images.CROSSWALK_OK_SHAPE: "output.tif"
         }
     else:
-        raise "Missing data from Terratec"
+        raise "Missing data from Terratec, use --mocking in stead"
 
 
 def stringifyFlags(mocking):
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     log("Initialization finished\n" + "---" * 3)
     log("\n\n")
 
-    detect(images[Images.CROSSWALK_OK_SHAPE])
+    detect(images[Images.CROSSWALK_OK_SHAPE], outputImages=True)
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
