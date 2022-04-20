@@ -30,6 +30,7 @@ def groupRectanglesToCrossWalks(rectangles, distanceThreshold=0.2):
 
     def mergeGroups(group1, gruop2):
         print("Merging gruops")
+        raise "Merging crosswalk groups is currently not implemented"
 
     def groupRectangles(rect1, rect2):
         groupOfRect1 = getGroupOfRectangle(rect1)
@@ -81,6 +82,9 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
 
     Us HLS (hue, lightness, saturation) for white filtering as white (seen as light) 
     seems to be a good masking option.
+
+    useFirstPersonView was implemented in order to filter out heaven from google maps images 
+    and is currently not in use for terratec images
     """
 
     approximations = []
@@ -158,10 +162,10 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
     crossWalkGroups = groupRectanglesToCrossWalks(objList)
 
     for crosswalk in crossWalkGroups:
-        print(crosswalk)
-        print(crosswalk.center)
+        # print(crosswalk)
+        # print(crosswalk.center)
         cv2.circle(coloredThresCopy, crosswalk.center, 15, (255, 0, 0),  -1)
-        print(crosswalk.corners)
+        # print(crosswalk.corners)
 
         cv2.rectangle(coloredThresCopy, crosswalk.upperLeftCorner,
                       crosswalk.lowerRightCorner, (0, 0, 255), 2)
