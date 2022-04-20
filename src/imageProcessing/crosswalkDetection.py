@@ -130,8 +130,7 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
         thresh_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     cnts = cnts[0] if len(cnts) == 2 else cnts[1]
 
-    rectList = []
-    objList = []
+    rectanglesList = []
 
     for cnt in cnts:
         approx = cv2.contourArea(cnt)
@@ -142,7 +141,7 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
 
             if (approx > 1000):
                 objectRepresentation = Rectangle(x, y, w, h)
-                objList.append(objectRepresentation)
+                rectanglesList.append(objectRepresentation)
                 # cv2.rectangle(coloredThresCopy, (x, y),
                 #               (x+w, y+h), (36, 255, 12), 2)
 
@@ -159,7 +158,7 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
     # Grouping rectangles does not work as of now
     #print(cv2.groupRectangles(rectList=rectList, groupThreshold=3))
 
-    crossWalkGroups = groupRectanglesToCrossWalks(objList)
+    crossWalkGroups = groupRectanglesToCrossWalks(rectanglesList)
 
     for crosswalk in crossWalkGroups:
         # print(crosswalk)
