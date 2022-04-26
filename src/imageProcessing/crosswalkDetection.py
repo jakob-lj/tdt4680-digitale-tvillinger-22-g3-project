@@ -6,15 +6,16 @@ from geometrics import calculateDistance
 from imageProcessing.objects import Rectangle, crossWalkIFy
 
 from log import log
+from tifHandlers.coordinateConverter import convertPixelPlacementToCoordinates
 
 
 def groupRectanglesToCrossWalks(rectangles, distanceThreshold=0.2):
     """
-    distanceThreshold is the decimal ratio between length of crosswalk and distance to another crosswalk 
+    distanceThreshold is the decimal ratio between length of crosswalk and distance to another crosswalk
     thats acceptable to be in a group of crosswalk elements => a crosswalk
 
-    This function will take the center of each rectangle and calculate the distance to other rectangles grouping them 
-    into lists of rectangles that are inside the ratio of another rectangle in the group. 
+    This function will take the center of each rectangle and calculate the distance to other rectangles grouping them
+    into lists of rectangles that are inside the ratio of another rectangle in the group.
     """
 
     groups = []
@@ -77,13 +78,13 @@ def groupRectanglesToCrossWalks(rectangles, distanceThreshold=0.2):
 def detect(imagePath, outputImages=False, useFirstPersonView=False):
     """
 
-    Cross walk detection using HLS filters. 
-    In order to find crosswalk. 
+    Cross walk detection using HLS filters.
+    In order to find crosswalk.
 
-    Us HLS (hue, lightness, saturation) for white filtering as white (seen as light) 
+    Us HLS (hue, lightness, saturation) for white filtering as white (seen as light)
     seems to be a good masking option.
 
-    useFirstPersonView was implemented in order to filter out heaven from google maps images 
+    useFirstPersonView was implemented in order to filter out heaven from google maps images
     and is currently not in use for terratec images
     """
 
@@ -98,6 +99,7 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
     hls = cv2.cvtColor(img, cv2.COLOR_BGR2HLS)
 
     # cv2.imshow("HLS", hls)
+    cv2.imwrite("results/HLS.png", hls)
 
     # define range of blue color in HLS
     lowerWhite = np.array([0, 240, 0])
@@ -119,10 +121,14 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
     # Disclaimer - a little of this is copied from : https://www.delftstack.com/howto/python/opencv-detect-rectangle/ :)
     gray_img = cv2.cvtColor(masked, cv2.COLOR_BGR2GRAY)
 
+    cv2.imwrite("results/gray.png", gray_img)
+
     thresh_img = cv2.threshold(
         gray_img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
 
     # cv2.imshow("trash", thresh_img)
+
+    cv2.imwrite("results/masked_image.png", thresh_img)
 
     coloredThresCopy = cv2.cvtColor(thresh_img, cv2.COLOR_BAYER_BG2BGR)
 
@@ -154,22 +160,41 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
                 # Draw the lines between contour elements to display them
                 # cv2.line(coloredThresCopy, start, end, (0, 0, 225), 3)
 
+    cv2.imwrite("results/withrectangles.png", coloredThresCopy)
+
     # Group threshold holds the number of rectangles should be grouped
     # Grouping rectangles does not work as of now
-    #print(cv2.groupRectangles(rectList=rectList, groupThreshold=3))
+    # print(cv2.groupRectangles(rectList=rectList, groupThreshold=3))
 
     crossWalkGroups = groupRectanglesToCrossWalks(rectanglesList)
 
+    outputImg = img
+
+    font = cv2.FONT_HERSHEY_SIMPLEX
     for crosswalk in crossWalkGroups:
         # print(crosswalk)
         # print(crosswalk.center)
-        cv2.circle(coloredThresCopy, crosswalk.center, 15, (255, 0, 0),  -1)
+        cv2.circle(outputImg, crosswalk.center, 15, (255, 0, 0),  -1)
         # print(crosswalk.corners)
 
-        cv2.rectangle(coloredThresCopy, crosswalk.upperLeftCorner,
+        cv2.rectangle(outputImg, crosswalk.upperLeftCorner,
                       crosswalk.lowerRightCorner, (0, 0, 255), 2)
 
-    if(outputImages):
-        cv2.imshow("Result", coloredThresCopy)
+        crosswalkCoordinates = convertPixelPlacementToCoordinates(
+            imagePath, crosswalk.center)
 
-    cv2.imwrite("results/crosswalk_detection.png", img)
+        coordiantesText = "%s" % str(crosswalkCoordinates)
+
+        cv2.putText(outputImg, coordiantesText,
+                    (crosswalk.lowerRightCorner[0] + 20, crosswalk.lowerRightCorner[1]+40), font, 2, (0, 0, 225), 2, cv2.LINE_AA)
+
+    if (len(crossWalkGroups) > 0):
+        log("Crosswalk has been detected in %s" %
+            [x.split("/") for x in imagePath.split("\\")][-1][0])
+
+    if(outputImages):
+        cv2.imshow("Result", outputImg)
+
+    cv2.imwrite("results/crosswalk_detection.png", outputImg)
+
+    return crossWalkGroups

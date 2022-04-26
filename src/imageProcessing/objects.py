@@ -76,6 +76,9 @@ class Crosswalk:
 
         return (int(sumX / len(self.rectangles)), int(sumY / len(self.rectangles)))
 
+    def getRasterioCenter(self):
+        return self.upperLeftCorner
+
     def __init__(self, rectangles):
         self.rectangles = rectangles
 

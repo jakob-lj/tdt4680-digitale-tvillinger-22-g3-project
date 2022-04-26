@@ -5,6 +5,7 @@ from stringHelpers import bold, green, underline
 from imageProcessing.crosswalkDetection import detect
 
 from log import log
+from tifHandlers.coordinateConverter import convertPixelPlacementToCoordinates
 
 
 class Images:
@@ -83,7 +84,14 @@ if __name__ == '__main__':
     log("Initialization finished\n" + "---" * 3)
     log("\n\n")
 
-    detect(images[Images.CROSSWALK_OK_SHAPE], outputImages=True)
+    image = images[Images.CROSSWALK_OK_SHAPE]
+
+    crossWalks = detect(image, outputImages=True)
+
+    if (len(crossWalks) > 0):  # crosswalks have been found
+        for crossWalk in crossWalks:
+            print(convertPixelPlacementToCoordinates(
+                image, crossWalk.center))
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()

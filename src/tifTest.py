@@ -42,3 +42,5 @@ if debugRaster:
 
             # Print GeoJSON shapes to stdout.
             print(geom)
+
+            print(ds)
