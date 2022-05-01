@@ -158,7 +158,7 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
                 end = cnt[i+1][0]
 
                 # Draw the lines between contour elements to display them
-                # cv2.line(coloredThresCopy, start, end, (0, 0, 225), 3)
+                cv2.line(coloredThresCopy, start, end, (0, 0, 225), 3)
 
     cv2.imwrite("results/withrectangles.png", coloredThresCopy)
 
