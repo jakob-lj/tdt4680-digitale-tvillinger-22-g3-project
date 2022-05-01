@@ -100,7 +100,7 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
     hls = cv2.cvtColor(img, cv2.COLOR_BGR2HLS)
 
     # cv2.imshow("HLS", hls)
-    cv2.imwrite("results/HLS.png", hls)
+    cv2.imwrite("results/HLS.png", makeImageSmallForReport(hls))
 
     # define range of blue color in HLS
     lowerWhite = np.array([0, 240, 0])
@@ -122,14 +122,15 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
     # Disclaimer - a little of this is copied from : https://www.delftstack.com/howto/python/opencv-detect-rectangle/ :)
     gray_img = cv2.cvtColor(masked, cv2.COLOR_BGR2GRAY)
 
-    cv2.imwrite("results/gray.png", gray_img)
+    cv2.imwrite("results/gray.png", makeImageSmallForReport(gray_img))
 
     thresh_img = cv2.threshold(
         gray_img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
 
     # cv2.imshow("trash", thresh_img)
 
-    cv2.imwrite("results/masked_image.png", thresh_img)
+    cv2.imwrite("results/masked_image.png",
+                makeImageSmallForReport(thresh_img))
 
     coloredThresCopy = cv2.cvtColor(thresh_img, cv2.COLOR_BAYER_BG2BGR)
 
@@ -197,6 +198,7 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
     if(outputImages):
         cv2.imshow("Result", outputImg)
 
-    cv2.imwrite("results/crosswalk_detection.png", outputImg)
+    cv2.imwrite("results/crosswalk_detection.png",
+                makeImageSmallForReport(outputImg))
 
     return crossWalkGroups
