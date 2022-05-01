@@ -3,6 +3,7 @@ from turtle import color
 import cv2
 import numpy as np
 from geometrics import calculateDistance
+from imageProcessing.imageProcess import makeImageSmallForReport
 from imageProcessing.objects import Rectangle, crossWalkIFy
 
 from log import log
@@ -160,7 +161,8 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
                 # Draw the lines between contour elements to display them
                 cv2.line(coloredThresCopy, start, end, (0, 0, 225), 3)
 
-    cv2.imwrite("results/withrectangles.png", coloredThresCopy)
+    cv2.imwrite("results/withrectangles.png",
+                makeImageSmallForReport(coloredThresCopy))
 
     # Group threshold holds the number of rectangles should be grouped
     # Grouping rectangles does not work as of now
