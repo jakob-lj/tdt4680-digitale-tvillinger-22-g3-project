@@ -189,7 +189,7 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
         coordiantesText = "%s" % str(crosswalkCoordinates)
 
         cv2.putText(outputImg, coordiantesText,
-                    (crosswalk.lowerRightCorner[0] + 20, crosswalk.lowerRightCorner[1]+40), font, 4, (0, 0, 225), 2, cv2.LINE_AA)
+                    (crosswalk.lowerLeftCorner[0] - 460, crosswalk.lowerRightCorner[1]+70), font, 2, (0, 0, 225), 2, cv2.LINE_AA)
 
     if (len(crossWalkGroups) > 0):
         log("Crosswalk has been detected in %s" %
