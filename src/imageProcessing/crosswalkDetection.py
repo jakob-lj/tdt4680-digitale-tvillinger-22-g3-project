@@ -188,6 +188,9 @@ def detect(imagePath, outputImages=False, useFirstPersonView=False):
 
         coordiantesText = "%s" % str(crosswalkCoordinates)
 
+        cv2.imwrite("results/crosswalk_witout_position.png",
+                    makeImageSmallForReport(outputImg))
+
         cv2.putText(outputImg, coordiantesText,
                     (crosswalk.lowerLeftCorner[0] - 460, crosswalk.lowerRightCorner[1]+70), font, 2, (0, 0, 225), 2, cv2.LINE_AA)
 
